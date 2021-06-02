@@ -66,9 +66,16 @@ let persons = [
   })
 
   app.post('/api/persons', (request, response) => {
+	
 	if (!request.body.name || !request.body.number){
 		return response.status(400).json({
 			error: "name or number missing"
+		})
+	}
+
+	if (-1 < persons.findIndex(element => element.name === request.body.name)) {
+		return response.status(400).json({
+			error: "name must be unique"
 		})
 	}
 
