@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
 	{
 	  id: 1,
@@ -24,8 +26,17 @@ let persons = [
 	}
   ]
 
-  app.get('/', (req, res) => {
-	res.send('<h1>Hello World!</h1>')
+  const getIdNumber = () => {
+	let biggest = 0;
+	persons.forEach(element => {
+		if (element.id > biggest)
+			biggest = element.id;
+		})
+	return (biggest + 1)
+  }
+
+  app.get('/', (request, response) => {
+	response.send('<h1>Hello World!</h1>')
   })
   
   app.get('/api/persons', (request, response) => {
@@ -34,7 +45,6 @@ let persons = [
 
   app.get('/info', (request, response) => {
 	const currentTime = new Date();
-	console.log(currentTime.toString())
 	const info = 'Phonebook has info for ' + persons.length + ' people <br><br>' + currentTime.toString()
 	response.send(info)
   })
@@ -48,6 +58,30 @@ let persons = [
 		response.status(404).end()
 	}
   })
+
+  app.delete('/api/persons/:id', (request, response) => {
+	const id = Number(request.params.id)
+	persons = persons.filter(person => person.id !== id)
+	response.status(204).end()
+  })
+
+  app.post('/api/persons', (request, response) => {
+	if (!request.body.name || !request.body.number){
+		return response.status(400).json({
+			error: "name or number missing"
+		})
+	}
+
+	const newId = getIdNumber()
+	newPerson = {
+		id: newId,
+		name: request.body.name,
+		number: request.body.number
+	}
+	persons = persons.concat(newPerson)
+	response.json(newPerson)
+  })
+
   
   const PORT = 3001
   app.listen(PORT, () => {
