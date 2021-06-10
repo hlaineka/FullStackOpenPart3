@@ -2,7 +2,5 @@ POST http://localhost:3001/api/persons/ HTTP/1.1
 content-type: application/json
 
 {
-	"name": "Findus Kalapuikko",
-	"number": "98983"
-
+	"name": "Findus Kalapuikko"
 }

@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/persons/60c1cf56dd5e68099fcf636d HTTP/1.1
+content-type: application/json
+
+{
+	"name": "Findus Kalapuikko",
+	"number": "654321"
+}

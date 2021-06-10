@@ -10,7 +10,8 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "react-devtools": "^4.13.5"
   },
   "scripts": {
     "start": "node index.js",
