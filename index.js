@@ -36,7 +36,7 @@ app.get('/info', (request, response, next) => {
 		const info = 'Phonebook has info for ' + result + ' people <br><br>' + currentTime.toString()
 		response.send(info)
 	})
-	.catch(error => next.length(error))
+	.catch(error => next(error))
   })
 
   app.get('/api/persons/:id', (request, response, next) => {
@@ -61,10 +61,6 @@ app.get('/info', (request, response, next) => {
 
   app.put('/api/persons/:id', (request, response, next) => {
 	const body = request.body
-  
-	if (!body.name || !body.number){
-		return response.status(400).json({error: "name or number missing"})
-	}
 
 	const newPerson = {
 		name: body.name,
