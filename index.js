@@ -81,17 +81,15 @@ app.get('/info', (request, response, next) => {
   app.post('/api/persons', (request, response, next) => {
 	const body = request.body
 
-	if (!body.name || !body.number){
-		return response.status(400).json({error: "name or number missing"})
-	}
-
 	const newPerson = new Person({
 		name: body.name,
 		number: body.number
 	})
 
-	newPerson.save().then(savedNote => {
-		response.json(savedNote)
+	newPerson.save(body.name)
+	.then(savedPerson => savedPerson.toJSON())
+	.then(savedAndFormattedPerson => {
+		response.json(savedAndFormattedPerson)
 	})
 	.catch(error => next(error))
   })
@@ -107,6 +105,8 @@ app.get('/info', (request, response, next) => {
   
 	if (error.name === 'CastError') {
 	  return response.status(400).send({ error: 'malformatted id' })
+	} else if (error.name === 'ValidationError') {
+		return response.status(400).json({error: error.message})
 	}
   
 	next(error)
