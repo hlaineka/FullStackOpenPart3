@@ -11,10 +11,12 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.28.0",
     "nodemon": "^2.0.7",
     "react-devtools": "^4.13.5"
   },
   "scripts": {
+    "lint": "eslint .",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../FullStackOpen2021/part_3/puhelinluettelo && npm run build --prod && cp -r build ../../../FullStackOpen_part3",
